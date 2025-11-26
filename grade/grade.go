@@ -1,17 +1,32 @@
-/*
-Program zakasnjeno-izvajanje prikazuje uporabo stavka defer v jeziku go
-*/
-package main
+//
+//# gradebook
+//Package gradebook implements simple functions of a real student gradebook.
+//
+//The package allows you to add a grade to a specific gradebook and calculate the average of a student's gradebook. There are also functions to provide a the complete list of grades and final grade of a specific subject.
+//
+//Example usagee:
+//
+//Janez := Student{"Janez", "Novak", []int{5,6,7}}
+//studenti := map[string]Student{"1": Janez}
+//
+//dodajOceno(studenti, "1", 10);
+//fmt.Printf("%.2f\n",povprecje(studenti, "1"))
+//izpisRedovalnice(studenti)
+//izpisiKoncniUspeh(studenti)
+
+package grade
 
 import "fmt"
 
+//Student represents a single student in a gradebook
 type Student struct {
     ime     string
     priimek string
     ocene   []int
 }
 
-func dodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int){
+//DodajOceno add a new grade into the gradebook for a specific student
+func DodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int){
 	if ocena >=0 && ocena <=10 {
 		stud, status := studenti[vpisnaStevilka]
 		if status {
@@ -21,6 +36,7 @@ func dodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int){
 	} else { fmt.Println("Ocena ni pravilna")}
 }
 
+//Povprecje calculates the average of all the grades in the gradebook for a specific student
 func povprecje(studenti map[string]Student, vpisnaStevilka string) float64{
 	stud, status := studenti[vpisnaStevilka]
 	if status {
@@ -36,7 +52,8 @@ func povprecje(studenti map[string]Student, vpisnaStevilka string) float64{
 	return -1.0;
 }
 
-func izpisRedovalnice(studenti map[string]Student){
+//IzpisRedovalnica prints all of the grades from the gradebook for a specific student
+func IzpisRedovalnice(studenti map[string]Student){
 	fmt.Println("REDOVALNICA:")
 	for vpisnaStevilka, stud := range studenti {
 		fmt.Printf("%s - %s %s: %v\n", vpisnaStevilka, stud.ime, stud.priimek, stud.ocene)
@@ -44,7 +61,8 @@ func izpisRedovalnice(studenti map[string]Student){
 
 }
 
-func izpisiKoncniUspeh(studenti map[string]Student){
+//IzpisiKoncniUspeh print the final grade from all the grades of a specific student
+func IzpisiKoncniUspeh(studenti map[string]Student){
 	fmt.Println("KONCNE OCENE:")
 	for vpisnaStevilka, stud := range studenti {
 		var povprecje float64 = povprecje(studenti,vpisnaStevilka)
@@ -56,46 +74,5 @@ func izpisiKoncniUspeh(studenti map[string]Student){
 	}
 
 }
-
-func main() {
-
-	Janez := Student{"Janez", "Novak", []int{5,6,7}}
-	Mojca := Student{"Mojca", "Novak", []int{10,10,10,10,10,10}}
-	studenti := map[string]Student{"1": Janez, "2": Mojca, "3": Student{"Karmen", "Pekarmen", []int{7,8,9,10,9,8,7}}}
-
-	fmt.Println(studenti)
-	fmt.Println("\n")
-	/*
-	 map[1:{Janez Novak [5 6 7]} 2:{Mojca Novak [10 10 10 10 10 10]} 3:{Karmen Pekarmen [7 8 9 10 9 8 7]}]
-	*/
-
-	dodajOceno(studenti, "1", 10);
-	fmt.Println(studenti) // map[1:{Janez Novak [5 6 7 10]} 2:{Mojca Novak [10 10 10 10 10 10]} 3:{Karmen Pekarmen [7 8 9 10 9 8 7]}]
-	fmt.Println("\n")
-	dodajOceno(studenti, "2", 11); // Ocena ni pravilna
-	dodajOceno(studenti, "4", 7); // Studenta ni na seznamu
-
-	fmt.Printf("%.2f\n",povprecje(studenti, "1")) //0.00
-	fmt.Printf("%.2f\n",povprecje(studenti, "2")) //10.00
-	fmt.Printf("%.2f\n",povprecje(studenti, "3")) //8.29
-	fmt.Printf("%.2f\n",povprecje(studenti, "4")) //-1.00
-
-	izpisRedovalnice(studenti)
-	/*
-	REDOVALNICA:
-		1 - Janez Novak: [5 6 7 10]
-		2 - Mojca Novak: [10 10 10 10 10 10]
-		3 - Karmen Pekarmen: [7 8 9 10 9 8 7]
-	*/
-
-	izpisiKoncniUspeh(studenti)
-	/*
-	KONCNE OCENE:
-		Janez Novak: povprečna ocena 0.00 -> Neuspešen študent
-		Mojca Novak: povprečna ocena 10.00 -> Odličen študent!
-		Karmen Pekarmen: povprečna ocena 8.29 -> Povprečen študent
-	*/
-
-
 }
 
