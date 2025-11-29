@@ -87,4 +87,3 @@ func IzpisiKoncniUspeh(studenti map[string]Student, stOcen int) {
 			stud.Ime, stud.Priimek, p, opis)
 	}
 }
-
