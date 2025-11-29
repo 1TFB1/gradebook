@@ -46,23 +46,23 @@ func main() {
 
 func run(_ context.Context, stOcen int, minOcena int, maxOcena int) error {
 	// Primer podatkov
-	janez := redovalnica.Student{Ime: "Janez", Priimek: "Novak", Ocene: []int{5, 6, 7}}
-	mojca := redovalnica.Student{Ime: "Mojca", Priimek: "Novak", Ocene: []int{10, 10, 10, 10, 10, 10}}
-	karmen := redovalnica.Student{Ime: "Karmen", Priimek: "Pekarmen", Ocene: []int{7, 8, 9, 10, 9, 8, 7}}
+	janez := grade.Student{Ime: "Janez", Priimek: "Novak", Ocene: []int{5, 6, 7}}
+	mojca := grade.Student{Ime: "Mojca", Priimek: "Novak", Ocene: []int{10, 10, 10, 10, 10, 10}}
+	karmen := grade.Student{Ime: "Karmen", Priimek: "Pekarmen", Ocene: []int{7, 8, 9, 10, 9, 8, 7}}
 
-	studenti := map[string]redovalnica.Student{
+	studenti := map[string]grade.Student{
 		"1": janez,
 		"2": mojca,
 		"3": karmen,
 	}
 
 	// demonstracija funkcionalnosti
-	redovalnica.DodajOceno(studenti, "1", 10, minOcena, maxOcena) // OK
-	redovalnica.DodajOceno(studenti, "2", 11, minOcena, maxOcena) // Ocena ni pravilna
-	redovalnica.DodajOceno(studenti, "4", 7, minOcena, maxOcena)  // Študenta ni na seznamu
+	grade.DodajOceno(studenti, "1", 10, minOcena, maxOcena) // OK
+	grade.DodajOceno(studenti, "2", 11, minOcena, maxOcena) // Ocena ni pravilna
+	grade.DodajOceno(studenti, "4", 7, minOcena, maxOcena)  // Študenta ni na seznamu
 
-	redovalnica.IzpisVsehOcen(studenti)
-	redovalnica.IzpisiKoncniUspeh(studenti, stOcen)
+	grade.IzpisVsehOcen(studenti)
+	grade.IzpisiKoncniUspeh(studenti, stOcen)
 
 	return nil
 }
