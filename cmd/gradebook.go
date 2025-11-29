@@ -7,7 +7,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 
-	"github.com/1TFB1/gradebook/"
+	"github.com/1TFB1/gradebook/grade"
 )
 
 func main() {
